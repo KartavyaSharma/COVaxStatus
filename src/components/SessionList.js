@@ -85,8 +85,6 @@ export default function GetSessionData({ state, district, date }) {
 
     if(isLoading) {
         return <div>Data Loading...</div>
-    } else {
-        console.log(district_data)
     }
 
     return (

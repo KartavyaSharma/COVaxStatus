@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import GetSessionData from './api_queries/getSessionData'
+import GetSessionData from './components/SessionList'
 import './styles/index.css';
 
 export default function IndexPage() {
