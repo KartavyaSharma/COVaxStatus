@@ -10,8 +10,7 @@ export default function IndexPage() {
     const date = "23-05-2021";
     return (
         <div>
-            Hello
-            <GetSessionData state={state} district={district} date={date} />
+            
         </div>
     )
 }
