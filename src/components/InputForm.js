@@ -9,56 +9,122 @@ const defaultParams = {
     metaDistrictBase: "districts/",
 }
 
-async function loadState(inputValue, callback) {
+async function getStateData() {
     try {
         const response = await axios.get(
             `${defaultParams.baseUrl}${defaultParams.metadataBase}states`
         );
         const stateData = response.data.states;
-        const responseArray = stateData.map(obj => ({ label: obj.state_name, value: obj.state_name }))
-        const filterResults = responseArray.filter(i => {
-            return i.label.toLowerCase().includes(inputValue.toLowerCase())
-        })
-        callback(filterResults)
+        const responseArray = stateData.map(obj => ({ label: obj.state_name, value: obj.state_id }))
+        return responseArray;
     } catch (error) {
-        callback([error.response])
+        return error.response;
     }
 }
 
-async function defaultStates() {
+async function getDistrictData(stateSelection) {
     try {
         const response = await axios.get(
-            `${defaultParams.baseUrl}${defaultParams.metadataBase}states`
-        );
-        const stateData = response.data.states;
-        const responseArray = stateData.map(obj => ({ label: obj.state_name, value: obj.state_name }))
+            `${defaultParams.baseUrl}${defaultParams.metadataBase}${defaultParams.metaDistrictBase}${stateSelection}`
+        )
+        const districtData = response.data.districts;
+        const responseArray = districtData.map(obj => ({ label: obj.district_name, value: obj.district_id }))
         return responseArray
     } catch (error) {
         return error.response
     }
 }
 
+
 export default function InputForm() {
 
-    const [isLoading, setIsLoading] = useState(true)
-    const [defaultStateData, setDefaultStates] = useState([])
-    const [selectedState, setSelectedState] = useState(false)
+    const [isLoadingState, setIsLoadingState] = useState(true)
+    const [isLoadingDist, setIsLoadingDist] = useState(true)
+
+    const [defaultStateData, setDefaultStates] = useState([]);
+    const [selectedState, setSelectedState] = useState(false);
+
+    const [defaultDistrictData, setDefaultDistricts] = useState([]);
+    const [selectedDistrict, setSelectedDistrict] = useState(false);
+
+    const [stateCallbackData, setStateCallbackData] = useState([])
+    const [stateInputValue, setStateInputValue] = useState("")
+
+    const [distCallbackData, setDistCallbackData] = useState([])
+    const [distInputValue, setDistInputValue] = useState("")
+
+    async function loadStateCallback(inputValue, callback) {
+        setStateInputValue(inputValue);
+        loadState();
+        const callbackData = stateCallbackData;
+        callback(callbackData);
+    }
+
+    async function loadDistrictCallback(inputValue, callback) {
+        setDistInputValue(inputValue);
+        loadDistrict();
+        const callbackData = distCallbackData;
+        callback(callbackData);
+    }
+
+    function loadState() {
+        try {
+            getStateData().then((res) => {
+                const filterResults = res.filter(i => {
+                    return i.label.toLowerCase().includes(stateInputValue.toLowerCase())
+                })
+                setStateCallbackData(filterResults);
+            });
+        } catch (error) {
+            setStateCallbackData([error.response])
+        }
+    }
+    
+    function loadDistrict() {
+        try {
+            getDistrictData(selectedState.value).then((res) => {
+                const filterResults = res.filter(i => {
+                    return i.label.toLowerCase().includes(distInputValue.toLowerCase())
+                })
+                setDistCallbackData(filterResults);
+            });
+        } catch (error) {
+            setDistCallbackData(error.response)
+        }
+    }
 
     useEffect(() => {
-        defaultStates().then((res) => {
+        getStateData().then((res) => {
             setDefaultStates(res);
-            setIsLoading(false);
+            setIsLoadingState(false);
         })
-    }, [])
+
+        getDistrictData(selectedState.value).then((res) => {
+            setDefaultDistricts(res);
+            setIsLoadingDist(false);
+        })
+    }, [selectedState])
 
     return (
         <div className='w-full'>
+            <div>{selectedState.label}</div>
             <AsyncSelect
+                placeholder="Select a state"
                 defaultOptions={defaultStateData}
-                loadOptions={loadState}
-                isLoading={isLoading}
+                loadOptions={loadStateCallback}
+                isLoading={isLoadingState}
                 className='w-1/2'
                 onChange={(value) => {setSelectedState(value)}}
+            />
+            <div>{selectedDistrict.label}</div>
+            <AsyncSelect 
+                placeholder="Select a district"
+                defaultOptions={defaultDistrictData}
+                loadOptions={loadDistrictCallback}
+                isLoading={isLoadingDist}
+                className='w-1/2'
+                isDisabled={!selectedState}
+                onChange={(value) => {setSelectedDistrict(value)}}
             />
         </div>
     )
