@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
 import Layout from './components/layout/Layout'
 import InputForm from './components/InputForm'
-import GetSessionData from './components/SessionList'
+// import GetSessionData from './components/SessionList'
 import './styles/index.css';
 import Hero from './assets/hero'
 
@@ -15,6 +15,8 @@ export default function IndexPage() {
     const [state, setState] = useState(undefined)
     const [district, setDistrict] = useState(undefined)
     const [date, setDate] = useState(undefined)
+
+    console.log(state, district, date)
 
     return (
         <div className='bg-violet-50 min-h-screen'>
