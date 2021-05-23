@@ -20,7 +20,7 @@ export default function IndexPage() {
 
     return (
         <div className='bg-violet-50 min-h-screen'>
-            <Layout>
+            <div className='pt-8 md:pt-12 lg:pt-16 lg:pb-5 px-6 md:px-8 lg:px-12 xl:px-36 2xl:px-56 max-w-screen-2xl w-full mx-auto'>
                 <div className='font-head flex flex-row items-center'>
                     <div className='text-4xl w-1/2'>
                         <span className='font-bold'>COWIN</span> <span className='italic'>Updates</span>
@@ -29,20 +29,22 @@ export default function IndexPage() {
                         <div className='font-head opacity-80 text-lg'>About</div>
                     </div>
                 </div>
-            </Layout>
-            <Layout>
-                <div className='mt-10 flex flex-row items-center'>
-                    <div className='w-full'>
-                        <InputForm onChange={(state, district, date) => {
-                            setState(state)
-                            setDistrict(district)
-                            setDate(date)
-                        }}/>
+            </div>
+            <div className='md:pt-12 lg:pt-5 xl:pt-7 2xl:pt-28 lg:pb-15 px-6 md:px-8 lg:px-12 xl:px-36 2xl:px-56 max-w-screen-2xl w-full mx-auto'>
+                <div className='flex flex-col items-center justify-center max-w-full h-2/3'>
+                    <div className='mt-10 flex flex-row items-center'>
+                        <div className='w-full'>
+                            <InputForm onChange={(state, district, date) => {
+                                setState(state)
+                                setDistrict(district)
+                                setDate(date)
+                            }}/>
+                        </div>
+                        <Hero />
                     </div>
-                    <Hero />
                 </div>
                 {/* <GetSessionData state={"Madhya Pradesh"} district={"Indore"} date={"23-05-2021"}/> */}
-            </Layout>
+            </div>
         </div>
     )
 }

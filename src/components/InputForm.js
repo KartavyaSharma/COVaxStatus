@@ -121,7 +121,7 @@ export default function InputForm() {
                 <div className='font-head text-2xl text-black font-semibold mb-5'>
                     Enter your details
                 </div>
-                <div className='z-50'>
+                <div className=''>
                     <AsyncSelect
                         placeholder="Select a state"
                         defaultOptions={defaultStateData}
@@ -145,7 +145,7 @@ export default function InputForm() {
                 <div className='font-head text-lg text-black font-semibold mt-5'>
                     Enter a date
                 </div>
-                <div className='mt-2 outlinew-none flex flex-row items-center w-full'>
+                <div className='mt-2 outlinew-none flex flex-row items-center w-full max-h-full'>
                     <Select
                         placeholder="Day"
                         options={optionsData.dayOptions}
