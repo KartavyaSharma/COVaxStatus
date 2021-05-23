@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { useFormik } from 'formik'
 import AsyncSelect from 'react-select/async'
 
 const axios = require('axios').default
@@ -43,6 +42,7 @@ export default function InputForm() {
 
     const [isLoading, setIsLoading] = useState(true)
     const [defaultStateData, setDefaultStates] = useState([])
+    const [selectedState, setSelectedState] = useState(false)
 
     useEffect(() => {
         defaultStates().then((res) => {
@@ -52,11 +52,14 @@ export default function InputForm() {
     }, [])
 
     return (
-        <AsyncSelect
-            defaultOptions={defaultStateData}
-            loadOptions={loadState}
-            isLoading={isLoading}
-            className='w-full'
-        />
+        <div className='w-full'>
+            <AsyncSelect
+                defaultOptions={defaultStateData}
+                loadOptions={loadState}
+                isLoading={isLoading}
+                className='w-1/2'
+                onChange={(value) => {setSelectedState(value)}}
+            />
+        </div>
     )
 }

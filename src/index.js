@@ -34,6 +34,7 @@ export default function IndexPage() {
                         setDate(date)
                     }}/>
                 </div>
+                {/* <GetSessionData state={"Madhya Pradesh"} district={"Indore"} date={"23-05-2021"}/> */}
             </Layout>
         </div>
     )
