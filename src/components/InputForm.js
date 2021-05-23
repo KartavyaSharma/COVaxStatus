@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import AsyncSelect from 'react-select/async'
+import Select from 'react-select'
 
 const axios = require('axios').default
+const optionsData = require('../data/data.js')
 
 const defaultParams = {
     baseUrl: "https://cdn-api.co-vin.in/api/v2/",
@@ -35,8 +37,8 @@ async function getDistrictData(stateSelection) {
     }
 }
 
-
 export default function InputForm() {
+
 
     const [isLoadingState, setIsLoadingState] = useState(true)
     const [isLoadingDist, setIsLoadingDist] = useState(true)
@@ -103,31 +105,76 @@ export default function InputForm() {
             setDefaultDistricts(res);
             setIsLoadingDist(false);
         })
+
     }, [selectedState])
+
+    const [day, setDay] = useState(null);
+    const [month, setMonth] = useState(null);
+    const [year, setYear] = useState(null);
 
     return (
         <div className='w-full'>
-            <div>{selectedState.label}</div>
-            <AsyncSelect
-                placeholder="Select a state"
-                defaultOptions={defaultStateData}
-                isSearchable={false}
-                // loadOptions={loadStateCallback}
-                isLoading={isLoadingState}
-                className='w-1/2'
-                onChange={(value) => {setSelectedState(value)}}
-            />
-            <div>{selectedDistrict.label}</div>
-            <AsyncSelect 
-                placeholder="Select a district"
-                defaultOptions={defaultDistrictData}
-                isSearchable={false}
-                // loadOptions={loadDistrictCallback}
-                isLoading={isLoadingDist}
-                className='w-1/2'
-                isDisabled={!selectedState}
-                onChange={(value) => {setSelectedDistrict(value)}}
-            />
+            <div className='bg-white shadow-xl rounded-lg w-2/5 p-5'>
+                <div className='font-head text-2xl text-black font-semibold mb-5'>
+                    Enter your details
+                </div>
+                <div className='z-50'>
+                    <AsyncSelect
+                        placeholder="Select a state"
+                        defaultOptions={defaultStateData}
+                        isSearchable={false}
+                        // loadOptions={loadStateCallback}
+                        isLoading={isLoadingState}
+                        className='w-full'
+                        onChange={(value) => {setSelectedState(value)}}
+                    />
+                    <AsyncSelect 
+                        placeholder="Select a district"
+                        defaultOptions={defaultDistrictData}
+                        isSearchable={false}
+                        // loadOptions={loadDistrictCallback}
+                        isLoading={isLoadingDist}
+                        className='w-full mt-5'
+                        isDisabled={!selectedState}
+                        onChange={(value) => {setSelectedDistrict(value)}}
+                    />
+                </div>
+                <div className='font-head text-lg text-black font-semibold mt-5'>
+                    Enter a date
+                </div>
+                <div className='mt-2 outlinew-none flex flex-row items-center w-full'>
+                    <Select
+                        placeholder="Day"
+                        options={optionsData.dayOptions}
+                        className='w-1/3 mr-2'
+                        onChange={(value) => {setDay(value)}}
+                    />
+                    <Select
+                        placeholder="Month"
+                        options={optionsData.monthOptions}
+                        className='w-1/3 mx-2'
+                        onChange={(value) => {setMonth(value)}}
+                    />
+                    <Select
+                        placeholder="Year"
+                        options={optionsData.yearOptions}
+                        className='w-1/3 ml-2'
+                        onChange={(value) => {setYear(value)}}
+                    />
+                </div>
+                <div className='mt-8 flex flex-row w-full'>
+                    <button className='px-3 py-2 border border-gray-300 hover:bg-violet-200 hover:text-violet-500 rounded-md shadow-md font-heads opacity-90 w-2/3'>
+                        Get session data
+                    </button>
+                    <div className='w-full flex flex-row justify-end items-center'>
+                        <span class="flex h-3 w-3">
+                            <span class="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-purple-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-3 w-3 bg-purple-500"></span>
+                        </span>
+                        <div className='font-head text-base opacity-80 ml-2 font-semibold'>Live</div>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

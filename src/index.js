@@ -6,6 +6,10 @@ import InputForm from './components/InputForm'
 import GetSessionData from './components/SessionList'
 import './styles/index.css';
 
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import MomentUtils from '@date-io/moment';
+
+
 export default function IndexPage() {
     // const state = "Madhya Pradesh";
     // const district = "Indore";
@@ -27,13 +31,15 @@ export default function IndexPage() {
                 </div>
             </Layout>
             <Layout>
-                <div className='mt-10 flex flex-row items-center'>
-                    <InputForm onChange={(state, district, date) => {
-                        setState(state)
-                        setDistrict(district)
-                        setDate(date)
-                    }}/>
-                </div>
+                <MuiPickersUtilsProvider utils={MomentUtils}>
+                    <div className='mt-10 flex flex-row items-center'>
+                        <InputForm onChange={(state, district, date) => {
+                            setState(state)
+                            setDistrict(district)
+                            setDate(date)
+                        }}/>
+                    </div>
+                </MuiPickersUtilsProvider>
                 {/* <GetSessionData state={"Madhya Pradesh"} district={"Indore"} date={"23-05-2021"}/> */}
             </Layout>
         </div>
