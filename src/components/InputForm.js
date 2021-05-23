@@ -114,7 +114,7 @@ export default function InputForm() {
 
     return (
         <div className='w-full'>
-            <div className='bg-white shadow-xl rounded-lg w-2/5 p-5'>
+            <div className='bg-white shadow-xl rounded-lg w-4/5 p-5'>
                 <div className='font-head text-2xl text-black font-semibold mb-5'>
                     Enter your details
                 </div>
