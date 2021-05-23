@@ -67,7 +67,7 @@ export default function InputForm() {
         callback(callbackData);
     }
 
-    function loadState() {
+    async function loadState() {
         try {
             getStateData().then((res) => {
                 const filterResults = res.filter(i => {
@@ -80,7 +80,7 @@ export default function InputForm() {
         }
     }
     
-    function loadDistrict() {
+    async function loadDistrict() {
         try {
             getDistrictData(selectedState.value).then((res) => {
                 const filterResults = res.filter(i => {
@@ -111,7 +111,8 @@ export default function InputForm() {
             <AsyncSelect
                 placeholder="Select a state"
                 defaultOptions={defaultStateData}
-                loadOptions={loadStateCallback}
+                isSearchable={false}
+                // loadOptions={loadStateCallback}
                 isLoading={isLoadingState}
                 className='w-1/2'
                 onChange={(value) => {setSelectedState(value)}}
@@ -120,7 +121,8 @@ export default function InputForm() {
             <AsyncSelect 
                 placeholder="Select a district"
                 defaultOptions={defaultDistrictData}
-                loadOptions={loadDistrictCallback}
+                isSearchable={false}
+                // loadOptions={loadDistrictCallback}
                 isLoading={isLoadingDist}
                 className='w-1/2'
                 isDisabled={!selectedState}
