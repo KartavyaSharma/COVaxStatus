@@ -7,3 +7,24 @@
 }
 
 @tailwind utilities;
+
+/* width */
+::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #F5F3FF;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #DDD6FE;
+    border-radius: 20px !important;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }

@@ -163,8 +163,8 @@ export default function InputForm() {
                     />
                 </div>
                 <div className='mt-8 flex flex-row w-full'>
-                    <button className='px-3 py-2 border border-gray-300 hover:bg-violet-200 hover:text-violet-500 rounded-md shadow-md font-heads opacity-90 w-2/3'>
-                        Get session data
+                    <button className='px-3 py-2 border border-gray-300 hover:bg-violet-200 group rounded-md shadow-md font-heads font-semibold w-2/3'>
+                        <span className='text-opacity-70 group-hover:text-violet-500 text-black'>Get session data</span>
                     </button>
                     <div className='w-full flex flex-row justify-end items-center'>
                         <span class="flex h-3 w-3">
