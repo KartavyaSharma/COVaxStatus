@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import Layout from './components/layout/Layout'
 import InputForm from './components/InputForm'
 import GetSessionData from './components/SessionList'
+
 import './styles/index.css';
 import Hero from './assets/hero'
 

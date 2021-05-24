@@ -95,7 +95,7 @@ export default function InputForm({ getFormState }) {
                         defaultOptions={defaultDistrictData}
                         isSearchable={false}
                         // loadOptions={loadDistrictCallback}
-                        isLoading={isLoadingDist}
+                        isLoading={isLoadingDist && selectedState !== false}
                         className='w-full mt-5'
                         isDisabled={!selectedState || submitState}
                         onChange={(value) => {setSelectedDistrict(value)}}
