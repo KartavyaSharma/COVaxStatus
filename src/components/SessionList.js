@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from 'react'
 
 const axios = require('axios').default;
-
-const defaultParams = {
-    baseUrl: "https://cdn-api.co-vin.in/api/v2/",
-    metadataBase: "admin/location/",
-    metaDistrictBase: "districts/",
-    appointmentBase: "appointment/sessions/public/findByDistrict"
-}
+const optionsData = require('../data/data.js')
 
 async function getSessionDataByDistrict(districtId, date) {
     try {
         const response = await axios.get(
-            `${defaultParams.baseUrl}${defaultParams.appointmentBase}`, {
+            `${optionsData.defaultParams.baseUrl}${optionsData.defaultParams.appointmentBase}`, {
                 params: {
                     district_id: districtId,
                     date: date,

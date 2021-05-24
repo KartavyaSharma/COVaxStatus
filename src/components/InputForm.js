@@ -5,16 +5,10 @@ import Select from 'react-select'
 const axios = require('axios').default
 const optionsData = require('../data/data.js')
 
-const defaultParams = {
-    baseUrl: "https://cdn-api.co-vin.in/api/v2/",
-    metadataBase: "admin/location/",
-    metaDistrictBase: "districts/",
-}
-
 async function getStateData() {
     try {
         const response = await axios.get(
-            `${defaultParams.baseUrl}${defaultParams.metadataBase}states`
+            `${optionsData.defaultParams.baseUrl}${optionsData.defaultParams.metadataBase}states`
         );
         const stateData = response.data.states;
         const responseArray = stateData.map(obj => ({ label: obj.state_name, value: obj.state_id }))
@@ -27,7 +21,7 @@ async function getStateData() {
 async function getDistrictData(stateSelection) {
     try {
         const response = await axios.get(
-            `${defaultParams.baseUrl}${defaultParams.metadataBase}${defaultParams.metaDistrictBase}${stateSelection}`
+            `${optionsData.defaultParams.baseUrl}${optionsData.defaultParams.metadataBase}${optionsData.defaultParams.metaDistrictBase}${stateSelection}`
         )
         const districtData = response.data.districts;
         const responseArray = districtData.map(obj => ({ label: obj.district_name, value: obj.district_id }))
