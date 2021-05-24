@@ -125,7 +125,7 @@ export default function InputForm(props) {
                     </button>
                     <div className='w-full flex flex-row justify-end items-center'>
                         <span class="flex h-3 w-3">
-                            <span class="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-purple-400 opacity-75"></span>
+                            <span class="animate-ping absolute inline-flex h-3 w-3 bg-purple-400 opacity-75" style={{ borderRadius: '50%' }}></span>
                             <span class="relative inline-flex rounded-full h-3 w-3 bg-purple-500"></span>
                         </span>
                         <div className='font-head text-base opacity-80 ml-2 font-semibold'>Live</div>
