@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 import Layout from './components/layout/Layout'
@@ -11,18 +11,31 @@ import Hero from './assets/hero'
 
 export default function IndexPage() {
 
-    const [district, setDistrict] = useState(undefined)
-    const [date, setDate] = useState(undefined)
-    const [isSubmitted, setIsSubmitted] = useState(false)
+    const [district, setDistrict] = useState(undefined);
+    const [date, setDate] = useState(undefined);
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isSmall, setIsSmall] = useState(undefined);
+    const [state, setState] = useState(undefined);
 
-    console.log(date);
+    useEffect(() => {
+        setIsSmall(window.innerWidth < 1000);
+        const handleResize = () => {
+            setIsSmall(window.innerWidth < 1000);
+        }
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize)
+        }
+    })
 
     return (
         <div className='bg-violet-50 min-h-screen'>
             <Layout>
                 <div className='font-head flex flex-row items-center'>
                     <div className='text-4xl w-1/2'>
-                        <span className='font-bold' >COWIN</span><span className='italic'>Updates</span>
+                        <span className='font-bold' >COVax</span><span className='italic'>Status</span>
                     </div>
                     <div className='flex flex-row justify-end w-full'>
                         <div className='font-head opacity-80 text-lg'>About</div>
@@ -33,23 +46,26 @@ export default function IndexPage() {
                 </div>
                 <div className='flex flex-col items-center justify-center max-w-full h-2/3'>
                     <div className={`mt-10 flex flex-col md:flex-row items-start justify-start w-full ${!isSubmitted ? 'lg:mb-36' : ''} 2xl:mb-0`}>
-                        <div className='w-2/3'>
-                            <InputForm getFormState = {(district, date, isSubmitted, setData) => {
+                        <div className={`${!isSmall ? 'w-2/3' : 'w-full'}`}>
+                            <InputForm getFormState = {(state, district, date, isSubmitted, setData) => {
+                                setState(state)
                                 setDistrict(district)
                                 setDate(date)
                                 setIsSubmitted(isSubmitted)
                             }}/>
                         </div>
-                        <Hero />
+                        {!isSmall ? <Hero /> : null}
                     </div>
                 </div>
-                {
-                    isSubmitted ? (
-                        <GetSessionData district={`${district.value}`} date={`${date}`}/>
-                    ) : (
-                        null
-                    )
-                }
+                <div className='mt-8 lg:mt-12 xl:mt-16'>
+                    {
+                        isSubmitted ? (
+                            <GetSessionData state={state} district={district} date={`${date}`}/>
+                        ) : (
+                            null
+                        )
+                    }
+                </div>
             </Layout>
         </div>
     )

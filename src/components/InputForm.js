@@ -121,7 +121,7 @@ export default function InputForm({ getFormState }) {
                     <div className='flex flex-row w-full'>
                         <button
                             isDisabled={submitState || !selectedState || !selectedDistrict || !selectedDate} 
-                            onClick={() => {getFormState(selectedDistrict, `${selectedDate}`, true, setSubmitState(true))}}
+                            onClick={() => {getFormState(selectedState, selectedDistrict, `${selectedDate}`, true, setSubmitState(true))}}
                             className={`px-3 py-2 focus:outline-none border border-gray-300 hover:bg-violet-200 group rounded-md shadow-md font-heads font-semibold w-1/3
                                 ${submitState || !selectedState || !selectedDistrict || !selectedDate ? 'opacity-70 pointer-events-none' : ''}`}
                         >
