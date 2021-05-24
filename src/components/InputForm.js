@@ -49,6 +49,11 @@ export default function InputForm({ getFormState }) {
     const [defaultDistrictData, setDefaultDistricts] = useState([]);
     const [selectedDistrict, setSelectedDistrict] = useState(false);
 
+    const [submitState, setSubmitState] = useState(false);
+    
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [resetState, setResetState] = useState(false);
+
     useEffect(() => {
         getStateData().then((res) => {
             setDefaultStates(res);
@@ -60,11 +65,13 @@ export default function InputForm({ getFormState }) {
             setIsLoadingDist(false);
         })
 
-    }, [selectedState])
+        if(resetState) {
+            setSelectedState(false);
+            setSelectedDistrict(false);
+            setSubmitState(false);
+        }
 
-    const [day, setDay] = useState(null);
-    const [month, setMonth] = useState(null);
-    const [year, setYear] = useState(null);
+    }, [selectedState, resetState])
 
     return (
         <div className='w-full'>
@@ -75,55 +82,63 @@ export default function InputForm({ getFormState }) {
                 <div className=''>
                     <AsyncSelect
                         placeholder="Select a state"
+                        value={resetState ? null : selectedState}
                         defaultOptions={defaultStateData}
                         isSearchable={false}
                         // loadOptions={loadStateCallback}
                         isLoading={isLoadingState}
                         className='w-full'
                         onChange={(value) => {setSelectedState(value)}}
+                        isDisabled={submitState}
                     />
                     <AsyncSelect 
                         placeholder="Select a district"
+                        value={resetState ? null : selectedDistrict}
                         defaultOptions={defaultDistrictData}
                         isSearchable={false}
                         // loadOptions={loadDistrictCallback}
                         isLoading={isLoadingDist}
                         className='w-full mt-5'
-                        isDisabled={!selectedState}
+                        isDisabled={!selectedState || submitState}
                         onChange={(value) => {setSelectedDistrict(value)}}
                     />
                 </div>
-                <div className='font-head text-lg text-black font-semibold mt-5'>
-                    Enter a date
+                <div className='font-head text-lg text-black font-semibold mt-5 flex flex-row items-center'>
+                    <div>View status for</div>
                 </div>
-                <div className='mt-2 outlinew-none flex flex-row items-center w-full max-h-full'>
+                <div className='mt-2'>
                     <Select
                         placeholder="Day"
-                        options={optionsData.dayOptions}
-                        className='w-1/3 mr-2'
-                        onChange={(value) => {setDay(value)}}
+                        options={optionsData.dateOptions}
+                        isDisabled={selectedDate != null}
+                        onChange={(value) => {setSelectedDate(value.value)}}
+                        className='w-1/2'
+                        value={selectedDate == null ? null : undefined}
                     />
-                    <Select
-                        placeholder="Month"
-                        options={optionsData.monthOptions}
-                        className='w-1/3 mx-2'
-                        onChange={(value) => {setMonth(value)}}
-                    />
-                    <Select
-                        placeholder="Year"
-                        options={optionsData.yearOptions}
-                        className='w-1/3 ml-2'
-                        onChange={(value) => {setYear(value)}}
-                    />
-                </div>
-                <div className='mt-8 flex flex-row w-full'>
-                    <button 
-                        onClick={() => getFormState(selectedDistrict, `${day.value}-${month.value}-${year.value}`, true)}
-                        className='px-3 py-2 focus:outline-none border border-gray-300 hover:bg-violet-200 group rounded-md shadow-md font-heads font-semibold w-2/3'
-                    >
-                        <span className='text-opacity-70 group-hover:text-violet-500 text-black'>Get appointments</span>
+                    <button onClick={() => {setSelectedDate(null)}} className='font-heads text-xs focus:outline-none text-gray-400 '>
+                        clear day
                     </button>
-                    <div className='w-full flex flex-row justify-end items-center'>
+                </div>
+                <div className='mt-4 flex flex-row w-full'>
+                    <div className='flex flex-row w-full'>
+                        <button
+                            isDisabled={submitState} 
+                            onClick={() => {getFormState(selectedDistrict, `${selectedDate}`, true, setSubmitState(true))}}
+                            className={`px-3 py-2 focus:outline-none border border-gray-300 hover:bg-violet-200 group rounded-md shadow-md font-heads font-semibold w-1/3
+                                ${submitState ? 'opacity-70 pointer-events-none' : ''}`}
+                        >
+                            <span className='text-opacity-70 group-hover:text-violet-500 text-black'>Get status</span>
+                        </button>
+                        <button
+                            isDisabled={submitState != null} 
+                            onClick={() => {setResetState(true)}}
+                            className={`px-3 py-2 focus:outline-none border border-gray-300 hover:bg-violet-200 group rounded-md shadow-md font-heads font-semibold w-1/3 ml-3
+                                ${!submitState ? 'opacity-70 pointer-events-none' : ''}`}
+                        >
+                            <span className='text-opacity-70 group-hover:text-violet-500 text-black'>Reset form</span>
+                        </button>
+                    </div>
+                    <div className='w-1/4 flex flex-row justify-end items-center'>
                         <span className="flex h-3 w-3">
                             <span className="animate-ping absolute inline-flex h-3 w-3 bg-purple-400 opacity-75" style={{ borderRadius: '50%' }}></span>
                             <span className="relative inline-flex rounded-full h-3 w-3 bg-purple-500"></span>

@@ -14,6 +14,8 @@ export default function IndexPage() {
     const [date, setDate] = useState(undefined)
     const [isSubmitted, setIsSubmitted] = useState(false)
 
+    console.log(date);
+
     return (
         <div className='bg-violet-50 min-h-screen'>
             <Layout>
@@ -31,7 +33,7 @@ export default function IndexPage() {
                 <div className='flex flex-col items-center justify-center max-w-full h-2/3'>
                     <div className='mt-10 flex flex-col md:flex-row items-start justify-start w-full lg:mb-36 2xl:mb-0'>
                         <div className='w-2/3'>
-                            <InputForm getFormState = {(district, date, isSubmitted) => {
+                            <InputForm getFormState = {(district, date, isSubmitted, setData) => {
                                 setDistrict(district)
                                 setDate(date)
                                 setIsSubmitted(isSubmitted)
