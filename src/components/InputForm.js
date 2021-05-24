@@ -60,15 +60,18 @@ export default function InputForm({ getFormState }) {
             setIsLoadingState(false);
         })
 
-        getDistrictData(selectedState.value).then((res) => {
-            setDefaultDistricts(res);
-            setIsLoadingDist(false);
-        })
+        if(selectedState !== false) {
+            getDistrictData(selectedState.value).then((res) => {
+                setDefaultDistricts(res);
+                setIsLoadingDist(false);
+            })
+        }
 
         if(resetState) {
             setSelectedState(false);
             setSelectedDistrict(false);
             setSubmitState(false);
+            setResetState(false);
         }
 
     }, [selectedState, resetState])
@@ -77,7 +80,7 @@ export default function InputForm({ getFormState }) {
         <div className='w-full'>
             <div className='bg-white shadow-xl rounded-lg w-4/5 p-5'>
                 <div className='font-head text-2xl text-black font-semibold mb-5'>
-                    Enter your details
+                    Enter region details
                 </div>
                 <div className=''>
                     <AsyncSelect
