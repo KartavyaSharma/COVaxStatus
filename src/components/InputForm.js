@@ -37,7 +37,7 @@ async function getDistrictData(stateSelection) {
     }
 }
 
-export default function InputForm() {
+export default function InputForm(props) {
 
 
     const [isLoadingState, setIsLoadingState] = useState(true)
@@ -48,52 +48,6 @@ export default function InputForm() {
 
     const [defaultDistrictData, setDefaultDistricts] = useState([]);
     const [selectedDistrict, setSelectedDistrict] = useState(false);
-
-    // const [stateCallbackData, setStateCallbackData] = useState([])
-    // const [stateInputValue, setStateInputValue] = useState("")
-
-    // const [distCallbackData, setDistCallbackData] = useState([])
-    // const [distInputValue, setDistInputValue] = useState("")
-
-    // async function loadStateCallback(inputValue, callback) {
-    //     setStateInputValue(inputValue);
-    //     loadState();
-    //     const callbackData = stateCallbackData;
-    //     callback(callbackData);
-    // }
-
-    // async function loadDistrictCallback(inputValue, callback) {
-    //     setDistInputValue(inputValue);
-    //     loadDistrict();
-    //     const callbackData = distCallbackData;
-    //     callback(callbackData);
-    // }
-
-    // async function loadState() {
-    //     try {
-    //         getStateData().then((res) => {
-    //             const filterResults = res.filter(i => {
-    //                 return i.label.toLowerCase().includes(stateInputValue.toLowerCase())
-    //             })
-    //             setStateCallbackData(filterResults);
-    //         });
-    //     } catch (error) {
-    //         setStateCallbackData([error.response])
-    //     }
-    // }
-    
-    // async function loadDistrict() {
-    //     try {
-    //         getDistrictData(selectedState.value).then((res) => {
-    //             const filterResults = res.filter(i => {
-    //                 return i.label.toLowerCase().includes(distInputValue.toLowerCase())
-    //             })
-    //             setDistCallbackData(filterResults);
-    //         });
-    //     } catch (error) {
-    //         setDistCallbackData(error.response)
-    //     }
-    // }
 
     useEffect(() => {
         getStateData().then((res) => {
