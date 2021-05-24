@@ -95,7 +95,7 @@ export default function GetSessionData({ state, district, date }) {
                 ) : (
                     district_data.map(obj => {
                         return(
-                            <li>{obj.name}</li>
+                            <li>{obj.vaccine}</li>
                         )
                     })
                 )

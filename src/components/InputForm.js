@@ -37,7 +37,7 @@ async function getDistrictData(stateSelection) {
     }
 }
 
-export default function InputForm(props) {
+export default function InputForm({ getFormState }) {
 
 
     const [isLoadingState, setIsLoadingState] = useState(true)
@@ -65,9 +65,6 @@ export default function InputForm(props) {
     const [day, setDay] = useState(null);
     const [month, setMonth] = useState(null);
     const [year, setYear] = useState(null);
-
-    console.log(day, month, year)
-    console.log(selectedDistrict)
 
     return (
         <div className='w-full'>
@@ -120,8 +117,11 @@ export default function InputForm(props) {
                     />
                 </div>
                 <div className='mt-8 flex flex-row w-full'>
-                    <button className='px-3 py-2 border border-gray-300 hover:bg-violet-200 group rounded-md shadow-md font-heads font-semibold w-2/3'>
-                        <span className='text-opacity-70 group-hover:text-violet-500 text-black'>Get session data</span>
+                    <button 
+                        onClick={() => getFormState(selectedState, selectedDistrict, `${day.value}-${month.value}-${year.value}`)}
+                        className='px-3 py-2 focus:outline-none border border-gray-300 hover:bg-violet-200 group rounded-md shadow-md font-heads font-semibold w-2/3'
+                    >
+                        <span className='text-opacity-70 group-hover:text-violet-500 text-black'>Get appointments</span>
                     </button>
                     <div className='w-full flex flex-row justify-end items-center'>
                         <span class="flex h-3 w-3">
