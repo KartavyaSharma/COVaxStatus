@@ -30,8 +30,8 @@ export default function IndexPage() {
                     </div>
                 </div>
                 <div className='flex flex-col items-center justify-center max-w-full h-2/3 mt-20'>
-                    <div className='mt-10 flex flex-row items-center'>
-                        <div className='w-full'>
+                    <div className='mt-10 flex flex-row items-start justify-start w-full'>
+                        <div className='w-2/3'>
                             <InputForm onChange={(state, district, date) => {
                                 setState(state)
                                 setDistrict(district)
