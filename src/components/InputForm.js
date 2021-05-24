@@ -118,7 +118,7 @@ export default function InputForm({ getFormState }) {
                 </div>
                 <div className='mt-8 flex flex-row w-full'>
                     <button 
-                        onClick={() => getFormState(selectedState, selectedDistrict, `${day.value}-${month.value}-${year.value}`)}
+                        onClick={() => getFormState(selectedState, selectedDistrict, `${day.value}-${month.value}-${year.value}`, true)}
                         className='px-3 py-2 focus:outline-none border border-gray-300 hover:bg-violet-200 group rounded-md shadow-md font-heads font-semibold w-2/3'
                     >
                         <span className='text-opacity-70 group-hover:text-violet-500 text-black'>Get appointments</span>

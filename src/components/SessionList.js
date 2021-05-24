@@ -9,40 +9,6 @@ const defaultParams = {
     appointmentBase: "appointment/sessions/public/findByDistrict"
 }
 
-async function getStateId(stateName) {
-    try {
-        const response = await axios.get(
-            `${defaultParams.baseUrl}${defaultParams.metadataBase}states`
-        );
-        const stateData = response.data.states;
-        let matchedId = "";
-        for (var i = 0; i < stateData.length; i++) {
-            const { state_id, state_name } = stateData[i];
-            if (state_name === stateName) matchedId = state_id;
-        }
-        return matchedId;
-    } catch (error) {
-        return error.response;
-    }
-}
-
-async function getDistrictId(stateId, districtName) {
-    try {
-        const response = await axios.get(
-            `${defaultParams.baseUrl}${defaultParams.metadataBase}${defaultParams.metaDistrictBase}${stateId}`
-        )
-        const districtData = response.data.districts;
-        let matchedId = "";
-        for (var i = 0; i < districtData.length; i++) {
-            const { district_id, district_name } = districtData[i];
-            if (district_name === districtName) matchedId = district_id;
-        }
-        return matchedId;
-    } catch (error) {
-        return error.response;
-    }
-}
-
 async function getSessionDataByDistrict(districtId, date) {
     try {
         const response = await axios.get(
@@ -60,10 +26,9 @@ async function getSessionDataByDistrict(districtId, date) {
     }
 }
 
-export default function GetSessionData({ state, district, date }) {
+export default function GetSessionData({ district, date }) {
 
     const queryParams = {
-        param_state: state,
         param_district: district,
     }
 
@@ -72,16 +37,12 @@ export default function GetSessionData({ state, district, date }) {
 
     useEffect(() => {
 
-        getStateId(queryParams.param_state).then((stateRes) => {
-            getDistrictId(stateRes, queryParams.param_district).then((distRes) => {
-                getSessionDataByDistrict(distRes, date).then((res) => {
-                    set_district_data(res);
-                    setIsLoading(false);
-                })
-            })
+        getSessionDataByDistrict(queryParams.param_district, date).then((res) => {
+            set_district_data(res);
+            setIsLoading(false);
         })
         
-    }, [queryParams.param_state, queryParams.param_district, date])
+    }, [queryParams.param_district, date])
 
     if(isLoading) {
         return <div>Loading Data...</div>
@@ -95,7 +56,7 @@ export default function GetSessionData({ state, district, date }) {
                 ) : (
                     district_data.map(obj => {
                         return(
-                            <li>{obj.vaccine}</li>
+                            <li>{obj.name}</li>
                         )
                     })
                 )

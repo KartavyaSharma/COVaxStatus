@@ -9,12 +9,11 @@ import Hero from './assets/hero'
 
 
 export default function IndexPage() {
-    // const state = "Madhya Pradesh";
-    // const district = "Indore";
-    // const date = "23-05-2021";
+
     const [state, setState] = useState(undefined)
     const [district, setDistrict] = useState(undefined)
     const [date, setDate] = useState(undefined)
+    const [isSubmitted, setIsSubmitted] = useState(false)
 
     console.log(state, district, date)
 
@@ -35,16 +34,23 @@ export default function IndexPage() {
                 <div className='flex flex-col items-center justify-center max-w-full h-2/3'>
                     <div className='mt-10 flex flex-col md:flex-row items-start justify-start w-full lg:mb-36 2xl:mb-0'>
                         <div className='w-2/3'>
-                            <InputForm getFormState = {(state, district, date) => {
+                            <InputForm getFormState = {(state, district, date, isSubmitted) => {
                                 setState(state)
                                 setDistrict(district)
                                 setDate(date)
+                                setIsSubmitted(isSubmitted)
                             }}/>
                         </div>
                         <Hero />
                     </div>
                 </div>
-                {/* <GetSessionData state={"Maharashtra"} district={"Wardha"} date={"24-05-2021"}/> */}
+                {
+                    isSubmitted ? (
+                        <GetSessionData district={`${district.value}`} date={`${date}`}/>
+                    ) : (
+                        null
+                    )
+                }
             </Layout>
         </div>
     )
