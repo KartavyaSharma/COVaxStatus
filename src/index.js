@@ -32,7 +32,7 @@ export default function IndexPage() {
                     Get the latest <span className='text-green-400'>appointment</span> data for <span className='text-violet-400'>vaccination</span> centers near you.
                 </div>
                 <div className='flex flex-col items-center justify-center max-w-full h-2/3'>
-                    <div className='mt-10 flex flex-col md:flex-row items-start justify-start w-full lg:mb-36 2xl:mb-0'>
+                    <div className={`mt-10 flex flex-col md:flex-row items-start justify-start w-full ${!isSubmitted ? 'lg:mb-36' : ''} 2xl:mb-0`}>
                         <div className='w-2/3'>
                             <InputForm getFormState = {(district, date, isSubmitted, setData) => {
                                 setDistrict(district)
