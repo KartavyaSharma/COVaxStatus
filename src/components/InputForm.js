@@ -118,15 +118,15 @@ export default function InputForm({ getFormState }) {
                 </div>
                 <div className='mt-8 flex flex-row w-full'>
                     <button 
-                        onClick={() => getFormState(selectedState, selectedDistrict, `${day.value}-${month.value}-${year.value}`, true)}
+                        onClick={() => getFormState(selectedDistrict, `${day.value}-${month.value}-${year.value}`, true)}
                         className='px-3 py-2 focus:outline-none border border-gray-300 hover:bg-violet-200 group rounded-md shadow-md font-heads font-semibold w-2/3'
                     >
                         <span className='text-opacity-70 group-hover:text-violet-500 text-black'>Get appointments</span>
                     </button>
                     <div className='w-full flex flex-row justify-end items-center'>
-                        <span class="flex h-3 w-3">
-                            <span class="animate-ping absolute inline-flex h-3 w-3 bg-purple-400 opacity-75" style={{ borderRadius: '50%' }}></span>
-                            <span class="relative inline-flex rounded-full h-3 w-3 bg-purple-500"></span>
+                        <span className="flex h-3 w-3">
+                            <span className="animate-ping absolute inline-flex h-3 w-3 bg-purple-400 opacity-75" style={{ borderRadius: '50%' }}></span>
+                            <span className="relative inline-flex rounded-full h-3 w-3 bg-purple-500"></span>
                         </span>
                         <div className='font-head text-base opacity-80 ml-2 font-semibold'>Live</div>
                     </div>

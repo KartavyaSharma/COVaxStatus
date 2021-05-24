@@ -10,12 +10,9 @@ import Hero from './assets/hero'
 
 export default function IndexPage() {
 
-    const [state, setState] = useState(undefined)
     const [district, setDistrict] = useState(undefined)
     const [date, setDate] = useState(undefined)
     const [isSubmitted, setIsSubmitted] = useState(false)
-
-    console.log(state, district, date)
 
     return (
         <div className='bg-violet-50 min-h-screen'>
@@ -34,8 +31,7 @@ export default function IndexPage() {
                 <div className='flex flex-col items-center justify-center max-w-full h-2/3'>
                     <div className='mt-10 flex flex-col md:flex-row items-start justify-start w-full lg:mb-36 2xl:mb-0'>
                         <div className='w-2/3'>
-                            <InputForm getFormState = {(state, district, date, isSubmitted) => {
-                                setState(state)
+                            <InputForm getFormState = {(district, date, isSubmitted) => {
                                 setDistrict(district)
                                 setDate(date)
                                 setIsSubmitted(isSubmitted)
