@@ -233,7 +233,7 @@ export default function GetSessionData({ state, district, date }) {
                                                             </div>
                                                         </div>
                                                         <div className='flex flex-row w-1/4 items-center justify-end'>
-                                                            <a href="#" className={`px-2 py-1 rounded-md bg-gray-200 flex flex-row items-center ml-3 ${obj.available_capacity !== 0 ? 'opacity-60 pointer-events-none' : ''}`}>
+                                                            <a href="#" className={`px-2 py-1 rounded-md bg-gray-200 flex flex-row items-center ml-3 ${obj.available_capacity === 0 ? 'opacity-60 pointer-events-none' : ''}`}>
                                                                 <div className='ml-1 font-heads text-black font-semibold text-sm'>Register</div>
                                                             </a>
                                                         </div>
