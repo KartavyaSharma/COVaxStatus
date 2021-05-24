@@ -70,6 +70,7 @@ export default function InputForm({ getFormState }) {
         if(resetState) {
             setSelectedState(false);
             setSelectedDistrict(false);
+            setSelectedDate(null);
             setSubmitState(false);
             setResetState(false);
         }
@@ -116,7 +117,7 @@ export default function InputForm({ getFormState }) {
                         isDisabled={selectedDate != null}
                         onChange={(value) => {setSelectedDate(value.value)}}
                         className='w-1/2'
-                        value={selectedDate == null ? null : undefined}
+                        value={selectedDate === null ? null : undefined}
                     />
                     <button onClick={() => {setSelectedDate(null)}} className='font-heads text-xs focus:outline-none text-gray-400 '>
                         clear day
