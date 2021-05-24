@@ -131,7 +131,7 @@ export default function InputForm({ getFormState }) {
                             className={`px-3 py-2 focus:outline-none border border-gray-300 hover:bg-violet-200 group rounded-md shadow-md font-heads font-semibold w-1/3
                                 ${submitState ? 'opacity-70 pointer-events-none' : ''}`}
                         >
-                            <span className='text-opacity-70 group-hover:text-violet-500 text-black'>Get status</span>
+                            <span className='text-opacity-70 text-sm 2xl:text-base group-hover:text-violet-500 text-black'>Get status</span>
                         </button>
                         <button
                             isDisabled={submitState != null} 
@@ -139,7 +139,7 @@ export default function InputForm({ getFormState }) {
                             className={`px-3 py-2 focus:outline-none border border-gray-300 hover:bg-violet-200 group rounded-md shadow-md font-heads font-semibold w-1/3 ml-3
                                 ${!submitState ? 'opacity-70 pointer-events-none' : ''}`}
                         >
-                            <span className='text-opacity-70 group-hover:text-violet-500 text-black'>Reset form</span>
+                            <span className='text-opacity-70 text-sm 2xl:text-base group-hover:text-violet-500 text-black'>Reset form</span>
                         </button>
                     </div>
                     <div className='w-1/4 flex flex-row justify-end items-center'>
