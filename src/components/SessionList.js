@@ -13,15 +13,6 @@ const LocationSvg = () => {
     )
 }
 
-const MedicalSvg = () => {
-    return (
-        <svg xmlns='http://www.w3.org/2000/svg' width="24" height="24" class='ionicon' viewBox='0 0 512 512'>
-            <title>Medkit</title><rect x='32' y='112' width='448' height='352' rx='48' ry='48' fill='none' stroke='currentColor' stroke-linejoin='round' stroke-width='32'/>
-            <path d='M144 112V80a32 32 0 0132-32h160a32 32 0 0132 32v32M256 208v160M336 288H176' fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='32'/>
-        </svg>
-    )
-}
-
 const CashSvg = () => {
     return (
         <svg xmlns='http://www.w3.org/2000/svg' width="24" height="24" class='ionicon' viewBox='0 0 512 512'>
@@ -103,13 +94,25 @@ export default function GetSessionData({ state, district, date }) {
 
     const [district_data, set_district_data] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [isMobile, setIsMobile] = useState(undefined);
 
     useEffect(() => {
+
+        setIsMobile(window.innerWidth <= 768);
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768);
+        }
 
         getSessionDataByDistrict(district.value, date).then((res) => {
             set_district_data(res);
             setIsLoading(false);
         })
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        }
         
     }, [queryParams.param_district, date])
 
@@ -121,38 +124,26 @@ export default function GetSessionData({ state, district, date }) {
         return str.join(' ');
     }
 
-    function tConvert(time) {
-        // Check correct time format and split into components
-        time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
-
-        if (time.length > 1) { // If time format correct
-            time = time.slice(1); // Remove full string match value
-            time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
-            time[0] = +time[0] % 12 || 12; // Adjust hours
-        }
-        return time.join(''); // return adjusted time or original string
-    }
-
     if(isLoading) {
         return <div className='font-heads text-2xl lg:text-4xl font-semibold'>Loading Data...</div>
     }
 
     function renderCenterCardList() {
         return (
-            <div>
+            <div className='w-full lg:w-3/5'>
                 {
                     'status' in district_data ? (
                         <div>{`Error: ${district_data.status}`}</div>
                     ) : (
                         <div>
                             <div className='font-heads text-2xl lg:text-4xl font-semibold'>{`Centers in ${district.label}, ${state.label}`}</div>
-                            <div className={`grid grid-cols-1 grid-rows-${Math.floor(district_data.length / 5)} gap-5 w-3/5 mt-7`}>
+                            <div className={`grid grid-cols-1 grid-rows-${Math.floor(district_data.length / 5)} gap-5 mt-7`}>
                             {
                                 district_data.map(obj => {
                                     return (
                                         <div className='w-full border bg-white shadow-xl rounded-lg h-full flex flex-col p-4'>
                                             <div className='grid grid-cols-5'>
-                                                <div className='col-span-3 flex flex-col h-full border-r border-gray-300 pr-3'>
+                                                <div className='col-span-full lg:col-span-3 flex flex-col h-full lg:border-r lg:border-gray-300 pr-3'>
                                                     <div className='flex flex-row items-center h-full'>
                                                         <div className='ml-2 font-heads text-xl font-semibold opacity-80'>{titleCase(obj.name)}</div>
                                                     </div>
@@ -181,8 +172,8 @@ export default function GetSessionData({ state, district, date }) {
                                                         <div className='ml-2 font-heads text-red-600 font-semibold text-sm opacity-80'>{`${obj.min_age_limit}+`}</div>
                                                     </div>
                                                 </div>
-                                                <div className='col-span-2 flex flex-col max-h-full'>
-                                                    { obj.slots.length !== 0 ? (
+                                                { obj.slots.length !== 0 ? (
+                                                    <div className='hidden lg:flex lg:flex-col lg:col-span-2 max-h-full'>
                                                         <div>
                                                             <div className='flex flex-row items-center h-max'>
                                                                 <div className='ml-2 font-heads font-semibold text-lg opacity-80 w-full text-center'>Time Slots</div>
@@ -203,42 +194,69 @@ export default function GetSessionData({ state, district, date }) {
                                                                 }
                                                             </div>
                                                         </div>
-                                                        ) : (null)
-                                                    }
-                                                </div>
+                                                    </div>
+                                                    ) : (
+                                                        <div className='hidden lg:col-span-2 lg:flex lg:flex-col max-h-full items-center justify-center'>
+                                                            <div className={`px-2 py-1 text-lg rounded-md ${obj.available_capacity !== 0 ? 'bg-green-300' : 'bg-red-300'}`}>
+                                                                {obj.available_capacity !== 0 ? <span className='text-back opacity-80'>Available</span> : <span className='text-back opacity-80'>Booked</span>}
+                                                            </div>
+                                                            <a href="#" className={`px-2 py-1 rounded-md bg-gray-200 flex flex-row items-center mt-6 ${obj.available_capacity === 0 ? 'opacity-60 pointer-events-none' : ''}`}>
+                                                                <div className='ml-1 font-heads text-black font-semibold text-lg'>Register</div>
+                                                            </a>
+                                                        </div>
+                                                    )
+                                                }
                                             </div>
                                             <div className='grid grid-cols-5 mt-6 w-full'>
-                                                <div className='col-span-3'>
+                                                <div className='col-span-3 lg:border-r lg:border-gray-300'>
                                                     <div className='flex flex-row w-full items-center pr-3'>
                                                         <div className='flex flex-row w-full'>
                                                             <button className='px-2 py-1 rounded-md bg-gray-200 flex flex-row items-center'>
-                                                                <EyeSvg />
+                                                                { !isMobile ? <EyeSvg /> : null}
                                                                 <div className='ml-1 font-heads text-black font-semibold text-sm'>Watch</div>
                                                             </button>
-                                                        </div>
-                                                        <div className='flex flex-row w-1/4 justify-end'>
-                                                            
                                                             <button className='px-2 py-1 rounded-md bg-gray-200 flex flex-row items-center ml-3'>
-                                                                <LocateSvg />
+                                                            { !isMobile ? <LocateSvg /> : null}
                                                                 <div className='ml-1 font-heads text-black font-semibold text-sm'>Locate</div>
                                                             </button>
+                                                            {
+                                                                isMobile ? (
+                                                                    <div className='flex flex-row items-center'>
+                                                                        <div className={`px-2 py-1 ml-3 text-sm rounded-md ${obj.available_capacity !== 0 ? 'bg-green-300' : 'bg-red-300'}`}>
+                                                                            {obj.available_capacity !== 0 ? <span className='text-back opacity-80'>Available</span> : <span className='text-back opacity-80'>Booked</span>}
+                                                                        </div>
+                                                                        {
+                                                                            obj.available_capacity !== 0 ? (
+                                                                                <div className='ml-5 -mt-1'>
+                                                                                    <RedirectSvg/>
+                                                                                </div>
+                                                                            ) : (
+                                                                                null
+                                                                            )
+                                                                        }
+                                                                    </div>
+                                                                ) : (
+                                                                    null
+                                                                )
+                                                            }
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className='col-span-2'>
-                                                    <div className='flex flex-row w-full items-center'>
-                                                        <div className='flex flex-row w-full items-center justify-start ml-3'>
-                                                            <div className={`px-2 py-1 text-sm rounded-md ${obj.available_capacity !== 0 ? 'bg-green-300' : 'bg-red-300'}`}>
-                                                                {obj.available_capacity !== 0 ? <span className='text-back opacity-80'>Available</span> : <span className='text-back opacity-80'>Booked</span>}
+                                                { obj.slots.length !== 0 ? (
+                                                        <div className='hidden lg:block lg:col-span-2'>
+                                                            <div className='flex flex-row w-full items-center'>
+                                                                <div className='flex flex-row w-full items-center justify-start ml-3'>
+                                                                    <a href="#" className={`px-2 py-1 rounded-md bg-gray-200 flex flex-row items-center ml-1 mr-3 ${obj.available_capacity === 0 ? 'opacity-60 pointer-events-none' : ''}`}>
+                                                                        <div className='ml-1 font-heads text-black font-semibold text-sm'>Register</div>
+                                                                    </a>
+                                                                    <div className={`px-2 py-1 text-sm rounded-md ${obj.available_capacity !== 0 ? 'bg-green-300' : 'bg-red-300'}`}>
+                                                                        {obj.available_capacity !== 0 ? <span className='text-back opacity-80'>Available</span> : <span className='text-back opacity-80'>Booked</span>}
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <div className='flex flex-row w-1/4 items-center justify-end'>
-                                                            <a href="#" className={`px-2 py-1 rounded-md bg-gray-200 flex flex-row items-center ml-3 ${obj.available_capacity === 0 ? 'opacity-60 pointer-events-none' : ''}`}>
-                                                                <div className='ml-1 font-heads text-black font-semibold text-sm'>Register</div>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                    ) : (null)
+                                                }
                                             </div>
                                         </div>      
                                     )

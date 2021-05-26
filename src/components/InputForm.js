@@ -49,6 +49,7 @@ export default function InputForm({ getFormState }) {
     const [resetState, setResetState] = useState(false);
 
     useEffect(() => {
+
         getStateData().then((res) => {
             setDefaultStates(res);
             setIsLoadingState(false);
@@ -73,7 +74,7 @@ export default function InputForm({ getFormState }) {
 
     return (
         <div className='w-full'>
-            <div className='bg-white shadow-xl rounded-lg w-4/5 p-5'>
+            <div className='bg-white shadow-xl rounded-lg w-full lg:w-4/5 p-5'>
                 <div className='font-head text-2xl text-black font-semibold mb-5'>
                     Enter region details
                 </div>
@@ -108,7 +109,7 @@ export default function InputForm({ getFormState }) {
                     <Select
                         placeholder="Day"
                         options={optionsData.dateOptions}
-                        isDisabled={selectedDate != null}
+                        isDisabled={selectedDate !== null}
                         onChange={(value) => {setSelectedDate(value.value)}}
                         className='w-1/2'
                         value={selectedDate === null ? null : undefined}
@@ -122,21 +123,21 @@ export default function InputForm({ getFormState }) {
                         <button
                             isDisabled={submitState || !selectedState || !selectedDistrict || !selectedDate} 
                             onClick={() => {getFormState(selectedState, selectedDistrict, `${selectedDate}`, true, setSubmitState(true))}}
-                            className={`px-3 py-2 focus:outline-none border border-gray-300 hover:bg-violet-200 group rounded-md shadow-md font-heads font-semibold w-1/3
+                            className={`px-1 lg:px-3 py-2 focus:outline-none border border-gray-300 hover:bg-violet-200 group rounded-md shadow-md font-heads font-semibold w-1/2 lg:w-1/3
                                 ${submitState || !selectedState || !selectedDistrict || !selectedDate ? 'opacity-70 pointer-events-none' : ''}`}
                         >
-                            <span className='text-opacity-70 text-sm 2xl:text-base group-hover:text-violet-500 text-black'>Get status</span>
+                            <div className='text-opacity-70 text-xs md:text-sm 2xl:text-base group-hover:text-violet-500 text-black'>Get status</div>
                         </button>
                         <button
-                            isDisabled={submitState != null} 
+                            isDisabled={submitState !== null} 
                             onClick={() => {setResetState(true)}}
-                            className={`px-3 py-2 focus:outline-none border border-gray-300 hover:bg-violet-200 group rounded-md shadow-md font-heads font-semibold w-1/3 ml-3
+                            className={`px-3 py-2 focus:outline-none border border-gray-300 hover:bg-violet-200 group rounded-md shadow-md font-heads font-semibold w-1/2 lg:w-1/3 ml-1 md:ml-3
                                 ${!submitState ? 'opacity-70 pointer-events-none' : ''}`}
                         >
-                            <span className='text-opacity-70 text-sm 2xl:text-base group-hover:text-violet-500 text-black'>Reset form</span>
+                            <div className='text-opacity-70 text-xs md:text-sm 2xl:text-base group-hover:text-violet-500 text-black'>Reset form</div>
                         </button>
                     </div>
-                    <div className='w-1/4 flex flex-row justify-end items-center'>
+                    <div className='w-1/4 hidden lg:flex lg:flex-row justify-end items-center'>
                         <span className="flex h-3 w-3">
                             <span className="animate-ping absolute inline-flex h-3 w-3 bg-purple-400 opacity-75" style={{ borderRadius: '50%' }}></span>
                             <span className="relative inline-flex rounded-full h-3 w-3 bg-purple-500"></span>
