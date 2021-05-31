@@ -130,7 +130,7 @@ export default function InputForm({ getFormState }) {
                         </button>
                         <button
                             isDisabled={submitState !== null} 
-                            onClick={() => {getFormState(false, false, null, false, false, setResetState(true), resetState)}}
+                            onClick={() => {getFormState(false, false, null, false, false, setResetState(true))}}
                             className={`px-3 py-2 focus:outline-none border border-gray-300 hover:bg-violet-200 group rounded-md shadow-md font-heads font-semibold w-1/2 lg:w-1/3 ml-1 md:ml-3
                                 ${!submitState ? 'opacity-70 pointer-events-none' : ''}`}
                         >

@@ -30,8 +30,6 @@ async function getSessionDataByDistrict(districtId, date) {
 
 export default function GetSessionData({ state, district, date }) {
 
-    console.log(district)
-
     const queryParams = {
         param_district: district.value,
     }
@@ -81,6 +79,7 @@ export default function GetSessionData({ state, district, date }) {
                     ) : (
                         <div>
                             <div className='font-heads text-2xl lg:text-4xl font-semibold'>{`Centers in ${district.label}, ${state.label}`}</div>
+                            {district_data.length === 0 ? <div className='font-heads text-black text-lg mt-5'>Oops, no results found.</div> : null}
                             <div className={`grid grid-cols-1 grid-rows-${Math.floor(district_data.length / 5)} gap-5 mt-7`}>
                             {
                                 district_data.map(obj => {
