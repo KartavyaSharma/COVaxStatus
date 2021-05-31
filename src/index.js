@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import Layout from './components/layout/Layout'
 import InputForm from './components/InputForm'
 import GetSessionData from './components/SessionList'
+import Footer from './components/Footer'
 
 import './styles/index.css';
 import Hero from './assets/hero'
@@ -31,7 +32,7 @@ export default function IndexPage() {
     })
 
     return (
-        <div className='bg-violet-50 min-h-screen'>
+        <div className='bg-violet-50 min-h-screen h-full'>
             <Layout>
                 <div className='font-head flex flex-row items-center'>
                     <div className='text-4xl w-1/2'>
@@ -65,6 +66,9 @@ export default function IndexPage() {
                             null
                         )
                     }
+                </div>
+                <div className='h-full items-end py-10'>
+                    <Footer />
                 </div>
             </Layout>
         </div>

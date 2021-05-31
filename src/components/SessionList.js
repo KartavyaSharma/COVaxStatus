@@ -69,7 +69,7 @@ export default function GetSessionData({ state, district, date }) {
     }
 
     if(isLoading) {
-        return <div className='font-heads text-2xl lg:text-4xl font-semibold'>Loading Data...</div>
+        return <div className='font-heads text-2xl lg:text-4xl font-semibold py-10'>Loading Data...</div>
     }
 
     function renderCenterCardList() {
