@@ -17,6 +17,7 @@ export default function IndexPage() {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [isSmall, setIsSmall] = useState(undefined);
     const [state, setState] = useState(undefined);
+    const [resetState, setResetState] = useState(false);
 
     useEffect(() => {
         setIsSmall(window.innerWidth < 1000);
@@ -30,6 +31,7 @@ export default function IndexPage() {
             window.removeEventListener('resize', handleResize)
         }
     })
+
 
     return (
         <div className='bg-violet-50 min-h-screen h-full'>
@@ -46,9 +48,9 @@ export default function IndexPage() {
                     Get the latest <span className='text-green-400'>appointment</span> data for <span className='text-violet-400'>vaccination</span> centers near you.
                 </div>
                 <div className='flex flex-col items-center justify-center max-w-full h-2/3'>
-                    <div className={`mt-10 flex flex-col md:flex-row items-start justify-start w-full ${!isSubmitted ? 'lg:mb-36' : ''} 2xl:mb-0`}>
+                    <div className={`mt-10 flex flex-col md:flex-row items-start justify-start w-full ${!isSubmitted ? 'lg:mb-15' : ''} 2xl:mb-0`}>
                         <div className={`${!isSmall ? 'w-2/3' : 'w-full'}`}>
-                            <InputForm getFormState = {(state, district, date, isSubmitted, setData) => {
+                            <InputForm getFormState = {(state, district, date, isSubmitted, setData, setReset) => {
                                 setState(state)
                                 setDistrict(district)
                                 setDate(date)
@@ -67,7 +69,7 @@ export default function IndexPage() {
                         )
                     }
                 </div>
-                <div className='h-full items-end py-10'>
+                <div className='h-full items-end py-1 lg:py-3 2xl:py-10'>
                     <Footer />
                 </div>
             </Layout>
