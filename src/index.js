@@ -17,7 +17,6 @@ export default function IndexPage() {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [isSmall, setIsSmall] = useState(undefined);
     const [state, setState] = useState(undefined);
-    const [resetState, setResetState] = useState(false);
 
     useEffect(() => {
         setIsSmall(window.innerWidth < 1000);
@@ -69,7 +68,7 @@ export default function IndexPage() {
                         )
                     }
                 </div>
-                <div className='h-full items-end py-1 lg:py-3 2xl:py-10'>
+                <div className='h-full items-end py-10'>
                     <Footer />
                 </div>
             </Layout>
