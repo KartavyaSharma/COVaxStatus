@@ -7,7 +7,7 @@ export default function Footer() {
                 <div className='flex flex-row w-full'>
                     <div className='flex flex-row w-1/2 justify-start'>
                         <div className='text-black text-base font-heads'>
-                            Created and designed with 💜 by <a href="https://github.com/KartavyaSharma" className='hover:text-violet-500 hover:underline'>Kartavya Sharma</a>
+                            Created and designed by <a href="https://github.com/KartavyaSharma" className='hover:text-violet-500 hover:underline'>Kartavya Sharma</a>
                         </div>
                     </div>
                     <div className='flex flex-row w-1/2 justify-end'>
